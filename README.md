@@ -5,22 +5,17 @@ This project is a Proof-of-Concept for an AI-powered conversational agent, "Athe
 Live Demo
 You can interact with the live application here: https://ai-excel-interviewer-brown.vercel.app/
 
-Key Features
-🤖 Conversational Interface: A real-time chat experience that simulates a technical interview.
+## **Key Features**
 
-🧠 Intelligent Evaluation: Utilizes Google's Gemini 1.5 Flash model to understand and evaluate candidate responses beyond simple keywords.
-
-📈 Structured Interview Flow: The agent introduces itself, asks a series of questions, and can provide a summary at the end.
-
-🔁 Full-Stack Architecture: Built with a modern tech stack, featuring a React frontend and a Python (FastAPI) backend.
+* 🤖 **Conversational Interface:** Simulates a real, multi-turn interview experience.
+* 🧠 **Intelligent Evaluation:** Utilizes Google's Gemini 1.5 Flash model to understand and evaluate candidate responses beyond simple keywords.
+* 📝 **Automated Feedback Report:** Generates a constructive performance summary at the end of the interview.
+* 🔁 **Full-Stack Architecture:** Built with a modern tech stack, featuring a React frontend and a Python (FastAPI) backend.
 
 Technology Stack
 Large Language Model: Google Gemini 1.5 Flash
-
 Frontend: React.js, Axios
-
 Backend: Python, FastAPI
-
 Deployment: Vercel (Frontend) & Render (Backend)
 
 Local Setup & Installation
