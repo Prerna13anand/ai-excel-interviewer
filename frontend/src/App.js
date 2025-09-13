@@ -24,7 +24,7 @@ function App() {
     }));
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/chat', {
+      const response = await axios.post('https://ai-excel-interviewer.onrender.com/chat', {
         message: input,
         history: history,
       });
