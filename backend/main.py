@@ -14,6 +14,7 @@ app = FastAPI()
 # --- ADD THIS MIDDLEWARE CONFIGURATION ---
 origins = [
     "http://localhost:3000", # The origin of your React app
+    "https://ai-excel-interviewer-brown.vercel.app",
 ]
 
 app.add_middleware(
