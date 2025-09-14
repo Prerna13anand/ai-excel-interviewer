@@ -29,6 +29,18 @@ app.add_middleware(
 # Configure the Gemini API client
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# --- DEFINE THE AI'S PERSONA HERE ---
+ATHENA_SYSTEM_PROMPT = """
+You are Athena, a friendly AI assistant conducting a mock interview for Microsoft Excel skills. 
+Your name is Athena. Do not mention that you are a language model.
+Your goal is to create a welcoming environment and assess the user's skills.
+
+Start the very first message of the conversation with this exact introduction:
+"Hey there! 👋 I’m Athena, your AI assistant for this mock interview. I’m here to help you practice your Microsoft Excel skills by asking a few questions. Think of me as your friendly guide to prepare for your real interview.
+
+Ready to start when you are!"
+"""
+
 # Define Pydantic models for request bodies
 class ChatRequest(BaseModel):
     message: str
@@ -43,11 +55,17 @@ def read_root():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    # Initialize the model with the Athena persona
+    model = genai.GenerativeModel(
+        'gemini-1.5-flash-latest',
+        system_instruction=ATHENA_SYSTEM_PROMPT
+    )
+    
     chat_history = []
     for item in request.history:
         role = 'model' if item.get('role') == 'ai' else 'user'
         chat_history.append({'role': role, 'parts': [item.get('content')]})
+        
     try:
         chat_session = model.start_chat(history=chat_history)
         response = chat_session.send_message(request.message)
@@ -57,25 +75,21 @@ def chat(request: ChatRequest):
         print(f"Error occurred: {e}")
         return {"error": str(e)}
 
-# --- NEW ENDPOINT FOR THE REPORT ---
 @app.post("/report")
 def get_report(request: ReportRequest):
     model = genai.GenerativeModel('gemini-1.5-flash-latest')
-    
-    # Format the history into a simple transcript string
     transcript = ""
     for item in request.history:
-        speaker = "Candidate" if item.get('role') == 'user' else "Interviewer"
+        speaker = "Candidate" if item.get('role') == 'user' else "Interviewer (Athena)"
         transcript += f"{speaker}: {item.get('content')}\n\n"
         
-    # Create a specific prompt for the summarization task
     prompt = f"""
     As an expert hiring manager, please analyze the following interview transcript for a role requiring strong Excel skills. 
     Based *only* on the provided transcript, generate a constructive performance report for the candidate.
     The report should include:
-    1.  A brief overall summary of the interview.
-    2.  The candidate's strengths (what they answered well).
-    3.  Areas for improvement (where their understanding was weak or incorrect).
+    1. A brief overall summary of the interview.
+    2. The candidate's strengths (what they answered well).
+    3. Areas for improvement (where their understanding was weak or incorrect).
     
     Keep the tone professional and constructive.
     
