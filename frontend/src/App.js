@@ -78,7 +78,7 @@ function App() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about Excel..."
+            placeholder="Ask about anything..."
           />
           <button type="submit">Send</button>
         </form>
