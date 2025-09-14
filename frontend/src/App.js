@@ -58,6 +58,13 @@ function App() {
 
   return (
     <div className="App">
+      {/* --- THIS IS THE NEW HEADER SECTION --- */}
+      <header className="App-header">
+        <h1>Athena</h1>
+        <p>Your AI-Powered Excel Interviewer</p>
+      </header>
+      {/* ------------------------------------ */}
+
       <div className="chat-window">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.role}`}>
@@ -78,7 +85,7 @@ function App() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about anything..."
+            placeholder="Ask a question about Excel..."
           />
           <button type="submit">Send</button>
         </form>
